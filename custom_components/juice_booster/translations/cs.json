@@ -1,0 +1,101 @@
+{
+  "title": "Juice Booster EV Charger",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Připojit J+ Pilot",
+        "description": "Přihlaste se účtem používaným v aplikaci J+ Pilot.",
+        "data": {
+          "username": "E-mail / uživatelské jméno",
+          "password": "Heslo"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Znovu připojit J+ Pilot",
+        "description": "Zadejte aktuální heslo J+ Pilot.",
+        "data": {
+          "password": "Heslo"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "K J+ Pilot se nelze připojit.",
+      "invalid_auth": "Neplatné uživatelské jméno nebo heslo.",
+      "no_devices": "V tomto účtu nebylo nalezeno žádné zařízení Juice.",
+      "unknown": "J+ Pilot vrátil neočekávanou odpověď."
+    },
+    "abort": {
+      "already_configured": "Tato nabíječka je již nastavena.",
+      "reauth_successful": "Opětovné přihlášení proběhlo úspěšně."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "charge_state": {
+        "name": "Stav nabíjení"
+      },
+      "charge_control": {
+        "name": "Řízení nabíjení"
+      },
+      "charge_start_time": {
+        "name": "Začátek nabíjení"
+      },
+      "energy_total": {
+        "name": "Celková energie"
+      },
+      "power_total": {
+        "name": "Celkový výkon"
+      },
+      "voltage_l1": {
+        "name": "Napětí L1"
+      },
+      "voltage_l2": {
+        "name": "Napětí L2"
+      },
+      "voltage_l3": {
+        "name": "Napětí L3"
+      },
+      "current_l1": {
+        "name": "Proud L1"
+      },
+      "current_l2": {
+        "name": "Proud L2"
+      },
+      "current_l3": {
+        "name": "Proud L3"
+      },
+      "power_l1": {
+        "name": "Výkon L1"
+      },
+      "power_l2": {
+        "name": "Výkon L2"
+      },
+      "power_l3": {
+        "name": "Výkon L3"
+      }
+    },
+    "number": {
+      "maximum_current": {
+        "name": "Maximální nabíjecí proud"
+      }
+    },
+    "switch": {
+      "charging": {
+        "name": "Nabíjení"
+      }
+    },
+    "binary_sensor": {
+      "is_charging": {
+        "name": "Aktivní nabíjení"
+      },
+      "smart_juice": {
+        "name": "Smart Juice"
+      }
+    },
+    "button": {
+      "refresh": {
+        "name": "Obnovit data"
+      }
+    }
+  }
+}

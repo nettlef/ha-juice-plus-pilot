@@ -1,0 +1,101 @@
+{
+  "title": "Juice Booster EV Charger",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect J+ Pilot",
+        "description": "Sign in with the account used by the J+ Pilot app.",
+        "data": {
+          "username": "Email / username",
+          "password": "Password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconnect J+ Pilot",
+        "description": "Enter your current J+ Pilot password.",
+        "data": {
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect to J+ Pilot.",
+      "invalid_auth": "Invalid username or password.",
+      "no_devices": "No Juice device was found in this account.",
+      "unknown": "Unexpected response from J+ Pilot."
+    },
+    "abort": {
+      "already_configured": "This charger is already configured.",
+      "reauth_successful": "Reauthentication was successful."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "charge_state": {
+        "name": "Charge state"
+      },
+      "charge_control": {
+        "name": "Charge control"
+      },
+      "charge_start_time": {
+        "name": "Charge start time"
+      },
+      "energy_total": {
+        "name": "Energy total"
+      },
+      "power_total": {
+        "name": "Power total"
+      },
+      "voltage_l1": {
+        "name": "Voltage L1"
+      },
+      "voltage_l2": {
+        "name": "Voltage L2"
+      },
+      "voltage_l3": {
+        "name": "Voltage L3"
+      },
+      "current_l1": {
+        "name": "Current L1"
+      },
+      "current_l2": {
+        "name": "Current L2"
+      },
+      "current_l3": {
+        "name": "Current L3"
+      },
+      "power_l1": {
+        "name": "Power L1"
+      },
+      "power_l2": {
+        "name": "Power L2"
+      },
+      "power_l3": {
+        "name": "Power L3"
+      }
+    },
+    "number": {
+      "maximum_current": {
+        "name": "Maximum charging current"
+      }
+    },
+    "switch": {
+      "charging": {
+        "name": "Charging"
+      }
+    },
+    "binary_sensor": {
+      "is_charging": {
+        "name": "Charging active"
+      },
+      "smart_juice": {
+        "name": "Smart Juice"
+      }
+    },
+    "button": {
+      "refresh": {
+        "name": "Refresh data"
+      }
+    }
+  }
+}
