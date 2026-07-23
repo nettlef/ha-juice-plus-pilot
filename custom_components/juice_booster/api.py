@@ -9,6 +9,14 @@ import json
 import logging
 from typing import Any
 
+import ssl
+from pathlib import Path
+
+ssl_context = ssl.create_default_context()
+ssl_context.load_verify_locations(
+    Path(__file__).parent / "certs" / "juice_ca.pem"
+)
+
 from aiohttp import ClientError, ClientResponse, ClientSession
 
 from .const import (
@@ -148,6 +156,7 @@ class JuiceBoosterApi:
                     url,
                     headers={"Authorization": f"Bearer {self.access_token}"},
                     json=json_data,
+                    ssl=ssl_context,
                 )
                 if response.status == 401 and retry_auth:
                     await response.read()
