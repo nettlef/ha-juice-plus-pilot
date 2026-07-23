@@ -11,7 +11,12 @@ from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .api import JuiceBoosterApi, JuiceBoosterAuthError, JuiceBoosterConnectionError
+from .api import (
+    JuiceBoosterApi,
+    JuiceBoosterApiError,
+    JuiceBoosterAuthError,
+    JuiceBoosterConnectionError,
+)
 from .const import (
     CONF_ACCESS_TOKEN,
     CONF_DEVICE_ID,
@@ -59,10 +64,19 @@ class JuiceBoosterConfigFlow(ConfigFlow, domain=DOMAIN):
                             CONF_DEVICE_ID: device_id,
                         },
                     )
-            except JuiceBoosterAuthError:
+                
+            except JuiceBoosterAuthError as err:
+                _LOGGER.error("J+ Pilot authentication failed: %s", err)
                 errors["base"] = "invalid_auth"
-            except JuiceBoosterConnectionError:
+                
+            except JuiceBoosterConnectionError as err:
+                _LOGGER.exception("Unable to connect to J+ Pilot: %s", err)
                 errors["base"] = "cannot_connect"
+                
+            except JuiceBoosterApiError as err:
+                _LOGGER.exception("J+ Pilot API error during setup: %s", err)
+                errors["base"] = "unknown"                
+                
             except (KeyError, TypeError, ValueError):
                 _LOGGER.exception("Unexpected J+ Pilot response during setup")
                 errors["base"] = "unknown"
