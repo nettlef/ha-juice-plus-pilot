@@ -151,12 +151,26 @@ class JuiceBoosterApi:
             await self.async_login()
         try:
             async with asyncio.timeout(REQUEST_TIMEOUT):
+                request_kwargs = {
+                    "headers": {"Authorization": f"Bearer {self.access_token}"},
+                    "json": json_data,
+                }
+
+                if url.startswith(
+                    (
+                        "https://profile.juice-pilot.com/",
+                        "https://charging.juice-pilot.com/",
+                        "https://device.juice-pilot.com/",
+                    )
+                ):
+                    request_kwargs["ssl"] = False
+                else:
+                    request_kwargs["ssl"] = ssl_context
+
                 response = await self._session.request(
                     method,
                     url,
-                    headers={"Authorization": f"Bearer {self.access_token}"},
-                    json=json_data,
-                    ssl=ssl_context,
+                    **request_kwargs,
                 )
                 if response.status == 401 and retry_auth:
                     await response.read()
