@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from typing import Any
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorEntityDescription, SensorStateClass
@@ -12,6 +13,39 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import JuiceBoosterConfigEntry
 from .entity import JuiceBoosterEntity, nested_value
+
+
+def _as_datetime(value: Any) -> datetime | None:
+    """Convert a J+ Pilot timestamp to a timezone-aware datetime."""
+    if value in (None, "", 0, "0"):
+        return None
+
+    try:
+        if isinstance(value, str):
+            stripped = value.strip()
+
+            # Numeric strings are handled as Unix timestamps.
+            try:
+                value = float(stripped)
+            except ValueError:
+                parsed = datetime.fromisoformat(stripped.replace("Z", "+00:00"))
+                if parsed.tzinfo is None:
+                    parsed = parsed.replace(tzinfo=UTC)
+                return parsed
+
+        if isinstance(value, (int, float)):
+            timestamp = float(value)
+
+            # J+ Pilot may return milliseconds instead of seconds.
+            if timestamp > 10_000_000_000:
+                timestamp /= 1000
+
+            return datetime.fromtimestamp(timestamp, tz=UTC)
+
+    except (TypeError, ValueError, OSError):
+        return None
+
+    return None
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -56,7 +90,7 @@ class JuiceBoosterSensor(JuiceBoosterEntity, SensorEntity):
         if value is None:
             return None
         if self.entity_description.device_class == SensorDeviceClass.TIMESTAMP:
-            return value
+            return _as_datetime(value)
         if isinstance(value, (int, float)):
             return value * self.entity_description.multiplier
         return value
